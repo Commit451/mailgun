@@ -1,6 +1,6 @@
 # mailgun
 
-Mailgun API access written in Kotlin. Uses OkHttp, Moshi, and RxJava under the hood. Android/Java 7 compatible.
+Mailgun API access in Kotlin. Uses OkHttp, Moshi, and RxJava under the hood. Android/Java 7 compatible.
 
 [![Build Status](https://travis-ci.org/Commit451/mailgun.svg?branch=master)](https://travis-ci.org/Commit451/mailgun) [![](https://jitpack.io/v/Commit451/mailgun.svg)](https://jitpack.io/#Commit451/mailgun)
 
@@ -22,7 +22,25 @@ dependencies {
 ```
 
 ## Usage
-//TODO
+All access to the API is done via the `Mailgun` class. You can create one like so:
+```kotlin
+val mailgun = Mailgun.Builder("mail.domain.com", "your_api_key")
+    .build()
+```
+
+### Send Message
+To send a message (email):
+```kotlin
+val from = Contact("blah@blah.com", "blah")
+val requestBuilder = SendMessageRequest.Builder(from)
+val to = mutableListOf<Contact>()
+to.add(Contact("jim@aol.com", "jim"))
+requestBuilder.to(to)
+requestBuilder.text("Hi")
+
+val response = mailgun.sendMessage(requestBuilder.build())
+        .blockingGet()
+```
 
 ## Reference
 - https://gist.github.com/mescortes/f34ca5dcb9386adc71f352e92454bf05
