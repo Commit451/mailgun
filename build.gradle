@@ -1,0 +1,45 @@
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'com.commit451.updatewrapper'
+buildscript {
+    ext.kotlin_version = '1.1.4'
+
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
+        classpath 'com.github.Commit451:updatewrapper:1.1.2'
+    }
+}
+
+group 'com.commit451.mailgun'
+version '1.0.0'
+
+apply plugin: 'kotlin'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+    jcenter()
+}
+
+ext {
+    moshiVersion = '1.5.0'
+    okHttpVersion = '3.8.1'
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    compile 'io.reactivex.rxjava2:rxjava:2.1.3'
+    compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    compile "com.squareup.moshi:moshi:$moshiVersion"
+
+    testCompile 'junit:junit:4.12'
+
+    testCompile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+}
