@@ -1,8 +1,8 @@
-# mailgun-kotlin
+# mailgun
 
 Mailgun API access written in Kotlin. Uses OkHttp, Moshi, and RxJava under the hood. Android/Java 7 compatible.
 
-[![Build Status](https://travis-ci.org/Commit451/mailgun-kotlin.svg?branch=master)](https://travis-ci.org/Commit451/mailgun-kotlin) [![](https://jitpack.io/v/Commit451/mailgun-kotlin.svg)](https://jitpack.io/#Commit451/mailgun-kotlin)
+[![Build Status](https://travis-ci.org/Commit451/mailgun.svg?branch=master)](https://travis-ci.org/Commit451/mailgun) [![](https://jitpack.io/v/Commit451/mailgun.svg)](https://jitpack.io/#Commit451/mailgun)
 
 ## Gradle Dependency
 Add the jitpack url to the project:
@@ -17,7 +17,7 @@ allprojects {
 then, in your app `build.gradle`
 ```groovy
 dependencies {
-    compile "com.github.Commit451:mailgun-kotlin:latest.version.here"
+    compile "com.github.Commit451:mailgun:latest.version.here"
 }
 ```
 

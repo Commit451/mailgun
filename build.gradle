@@ -41,5 +41,7 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
 
-    testCompile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    testCompile "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
+
+    testCompile 'com.google.guava:guava:22.0'
 }

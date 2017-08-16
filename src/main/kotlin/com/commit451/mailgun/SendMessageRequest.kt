@@ -17,6 +17,7 @@ class SendMessageRequest internal constructor() {
     internal var html: String? = null
     internal var subject: String? = null
     internal var attachments: List<Attachment>? = null
+    internal var inlineAttachments: List<Attachment>? = null
 
     internal fun toMultipartBody(): MultipartBody {
         val bodyBuilder = MultipartBody.Builder()
@@ -37,7 +38,9 @@ class SendMessageRequest internal constructor() {
         attachments?.forEach {
             bodyBuilder.addFormDataPart("attachment", it.name, it.file)
         }
-
+        inlineAttachments?.forEach {
+            bodyBuilder.addFormDataPart("inline", it.name, it.file)
+        }
         return bodyBuilder.build()
     }
 
@@ -81,6 +84,11 @@ class SendMessageRequest internal constructor() {
 
         fun attachments(attachments: List<Attachment>): Builder {
             request.attachments = attachments
+            return this
+        }
+
+        fun inlineAttachments(attachments: List<Attachment>): Builder {
+            request.inlineAttachments = attachments
             return this
         }
 

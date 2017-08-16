@@ -7,19 +7,23 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-class Mailgun private constructor(private val domain: String,
-                                  private val apiKey: String,
-                                  initialClientBuilder: OkHttpClient.Builder?) {
+class Mailgun private constructor(builder: Mailgun.Builder) {
 
     companion object {
         private const val BASE_URL = "https://api.mailgun.net/v3/"
     }
 
+    private val domain: String
+    private val apiKey: String
     private val moshi: Moshi
     private val okHttpClient: OkHttpClient
+    private val baseUrl: String
 
     init {
-        val clientBuilder = initialClientBuilder ?: OkHttpClient.Builder()
+        domain = builder.domain
+        apiKey = builder.apiKey
+        baseUrl = builder.baseUrl ?: BASE_URL
+        val clientBuilder = builder.okHttpBuilder ?: OkHttpClient.Builder()
 
         clientBuilder.interceptors().add(0, Interceptor { chain ->
             val credentials = Credentials.basic("api", apiKey)
@@ -36,7 +40,7 @@ class Mailgun private constructor(private val domain: String,
 
     fun sendMessage(sendMessageRequest: SendMessageRequest): Single<SendMessageResponse> {
         val requestBuilder = Request.Builder()
-                .url("$BASE_URL$domain/messages")
+                .url("$baseUrl$domain/messages")
                 .post(sendMessageRequest.toMultipartBody())
         val call = okHttpClient.newCall(requestBuilder.build())
         return Single.defer {
@@ -51,17 +55,26 @@ class Mailgun private constructor(private val domain: String,
         }
     }
 
-    class Builder(private val domain: String, private val apiKey: String) {
+    class Builder(internal val domain: String, internal val apiKey: String) {
 
-        private var okHttpBuilder: OkHttpClient.Builder? = null
+        internal var okHttpBuilder: OkHttpClient.Builder? = null
+        internal var baseUrl: String? = null
 
         fun okHttpClientBuilder(okHttpClientBuilder: OkHttpClient.Builder?): Builder {
             this.okHttpBuilder = okHttpClientBuilder
             return this
         }
 
+        /**
+         * Set the base url, should only need to be used for internal tests
+         */
+        fun baseUrl(baseUrl: String): Builder {
+            this.baseUrl = baseUrl
+            return this
+        }
+
         fun build(): Mailgun {
-            return Mailgun(domain, apiKey, this.okHttpBuilder)
+            return Mailgun(this)
         }
     }
 }
