@@ -24,6 +24,7 @@ targetCompatibility = 1.7
 
 repositories {
     jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 ext {
@@ -36,8 +37,11 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     compile 'io.reactivex.rxjava2:rxjava:2.1.3'
+
     compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
     compile "com.squareup.moshi:moshi:$moshiVersion"
+
+    compile 'com.github.Commit451:ehhttp:1.0.0'
 
     testCompile 'junit:junit:4.12'
 

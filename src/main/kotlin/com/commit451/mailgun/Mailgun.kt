@@ -1,5 +1,6 @@
 package com.commit451.mailgun
 
+import com.commit451.ehhttp.toSingle
 import com.squareup.moshi.Moshi
 import io.reactivex.Single
 import okhttp3.Credentials
@@ -43,16 +44,16 @@ class Mailgun private constructor(builder: Mailgun.Builder) {
                 .url("$baseUrl$domain/messages")
                 .post(sendMessageRequest.toMultipartBody())
         val call = okHttpClient.newCall(requestBuilder.build())
-        return Single.defer {
-            val response = call.execute()
-            val body = response.body()?.source()
-            if (body != null) {
-                val typedResponse = moshi.adapter<SendMessageResponse>(SendMessageResponse::class.java).fromJson(body)
-                Single.just(typedResponse)
-            } else {
-                throw Exception("Fail. Needs to be a better exception")
-            }
-        }
+        return call.toSingle()
+                .flatMap { response ->
+                    val body = response.body()?.source()
+                    if (body != null) {
+                        val typedResponse = moshi.adapter<SendMessageResponse>(SendMessageResponse::class.java).fromJson(body)
+                        Single.just(typedResponse)
+                    } else {
+                        throw NullPointerException("Response body was null")
+                    }
+                }
     }
 
     class Builder(internal val domain: String, internal val apiKey: String) {
