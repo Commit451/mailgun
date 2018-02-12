@@ -8,6 +8,9 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
+/**
+ * The Mailgun instance. Use the [Builder] to create one
+ */
 class Mailgun private constructor(builder: Mailgun.Builder) {
 
     companion object {
@@ -39,6 +42,9 @@ class Mailgun private constructor(builder: Mailgun.Builder) {
                 .build()
     }
 
+    /**
+     * Send a message (email) with the specified request
+     */
     fun sendMessage(sendMessageRequest: SendMessageRequest): Single<SendMessageResponse> {
         val requestBuilder = Request.Builder()
                 .url("$baseUrl$domain/messages")
@@ -56,11 +62,17 @@ class Mailgun private constructor(builder: Mailgun.Builder) {
                 }
     }
 
+    /**
+     * Build [Mailgun] instances
+     */
     class Builder(internal val domain: String, internal val apiKey: String) {
 
         internal var okHttpBuilder: OkHttpClient.Builder? = null
         internal var baseUrl: String? = null
 
+        /**
+         * Set the custom [OkHttpClient.Builder] which will be used for network calls
+         */
         fun okHttpClientBuilder(okHttpClientBuilder: OkHttpClient.Builder?): Builder {
             this.okHttpBuilder = okHttpClientBuilder
             return this
@@ -74,6 +86,9 @@ class Mailgun private constructor(builder: Mailgun.Builder) {
             return this
         }
 
+        /**
+         * Create a [Mailgun] instance
+         */
         fun build(): Mailgun {
             return Mailgun(this)
         }

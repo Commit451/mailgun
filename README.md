@@ -17,7 +17,7 @@ allprojects {
 then, in your app `build.gradle`
 ```groovy
 dependencies {
-    compile "com.github.Commit451:mailgun:latest.version.here"
+    implementation "com.github.Commit451:mailgun:latest.version.here"
 }
 ```
 
@@ -34,7 +34,7 @@ To send a message (email):
 val from = Contact("blah@blah.com", "blah")
 val requestBuilder = SendMessageRequest.Builder(from)
 val to = mutableListOf<Contact>()
-to.add(Contact("jim@aol.com", "jim"))
+to.add(Contact("jim@example.com", "jim"))
 requestBuilder.to(to)
 requestBuilder.text("Hi")
 
@@ -50,7 +50,7 @@ val response = mailgun.sendMessage(requestBuilder.build())
 License
 --------
 
-    Copyright 2017 Commit 451
+    Copyright 2018 Commit 451
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
