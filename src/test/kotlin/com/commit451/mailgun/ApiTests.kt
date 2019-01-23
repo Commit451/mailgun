@@ -1,8 +1,11 @@
 package com.commit451.mailgun
 
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Assert
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 
 
@@ -17,7 +20,7 @@ class ApiTests {
     }
 
     @Test
-    fun jsonResponseTest() {
+    fun `JSON response from server`() {
 
         val server = MockWebServer()
         server.enqueue(MockResponse().setBody(Util.getFileText("sent-response.json")))
@@ -29,13 +32,22 @@ class ApiTests {
         val requestBuilder = SendMessageRequest.Builder(from)
         val to = mutableListOf<Contact>()
         to.add(Contact("jim@aol.com", "jim"))
+
+        val attachment = Attachment(
+                fileName = "text.txt",
+                requestBody = RequestBody.create(MediaType.parse("text/plain"), "This is in a text file")
+        )
+        val attachments = listOf(attachment)
+
         requestBuilder.to(to)
-        requestBuilder.text("Hi")
+                .text("Hi")
+                .attachments(attachments)
 
         val response = mailgun.sendMessage(requestBuilder.build())
                 .blockingGet()
 
-        Assert.assertNotNull(response)
-        Assert.assertNotNull(response.id)
+        assertNotNull(response)
+        assertNotNull(response.id)
+        assertNotNull(response.message)
     }
 }

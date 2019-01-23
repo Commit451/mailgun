@@ -3,6 +3,6 @@ package com.commit451.mailgun
 import okhttp3.RequestBody
 
 /**
- * The attachment
+ * The attachment to send in the email
  */
-class Attachment(val name: String, val file: RequestBody)
+class Attachment(val fileName: String, val requestBody: RequestBody)

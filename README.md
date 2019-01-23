@@ -32,11 +32,19 @@ val mailgun = Mailgun.Builder("mail.domain.com", "your_api_key")
 To send a message (email):
 ```kotlin
 val from = Contact("blah@blah.com", "blah")
-val requestBuilder = SendMessageRequest.Builder(from)
+
 val to = mutableListOf<Contact>()
 to.add(Contact("jim@example.com", "jim"))
-requestBuilder.to(to)
-requestBuilder.text("Hi")
+val attachment = Attachment(
+    fileName = "text.txt",
+    requestBody = RequestBody.create(MediaType.parse("text/plain"), "This is in a text file")
+)
+val attachments = listOf(attachment)
+
+val requestBuilder = SendMessageRequest.Builder(from)
+    .to(to)
+    .text("Hi")
+    .attachments(attachments)
 
 val response = mailgun.sendMessage(requestBuilder.build())
         .blockingGet()
@@ -50,7 +58,7 @@ val response = mailgun.sendMessage(requestBuilder.build())
 License
 --------
 
-    Copyright 2018 Commit 451
+    Copyright 2019 Commit 451
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

@@ -36,10 +36,10 @@ class SendMessageRequest internal constructor() {
             bodyBuilder.addFormDataPart("bcc", it.toString())
         }
         attachments?.forEach {
-            bodyBuilder.addFormDataPart("attachment", it.name, it.file)
+            bodyBuilder.addFormDataPart("attachment", it.fileName, it.requestBody)
         }
         inlineAttachments?.forEach {
-            bodyBuilder.addFormDataPart("inline", it.name, it.file)
+            bodyBuilder.addFormDataPart("inline", it.fileName, it.requestBody)
         }
         return bodyBuilder.build()
     }
