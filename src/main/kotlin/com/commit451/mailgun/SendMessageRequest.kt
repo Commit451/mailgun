@@ -18,6 +18,8 @@ class SendMessageRequest internal constructor() {
     internal var subject: String? = null
     internal var attachments: List<Attachment>? = null
     internal var inlineAttachments: List<Attachment>? = null
+    internal var template: String? = null
+    internal var templateVariables: Map<String, String>? = null
 
     internal fun toMultipartBody(): MultipartBody {
         val bodyBuilder = MultipartBody.Builder()
@@ -40,6 +42,13 @@ class SendMessageRequest internal constructor() {
         }
         inlineAttachments?.forEach {
             bodyBuilder.addFormDataPart("inline", it.fileName, it.requestBody)
+        }
+        template?.let {
+            bodyBuilder.addFormDataPart("template", it)
+            // Cant add template variables if no template is provided
+            templateVariables?.forEach { (k, v) ->
+                bodyBuilder.addFormDataPart("v:$k", v)
+            }
         }
         return bodyBuilder.build()
     }
@@ -79,6 +88,16 @@ class SendMessageRequest internal constructor() {
 
         fun subject(subject: String?): Builder {
             request.subject = subject
+            return this
+        }
+
+        fun template(template: String?) : Builder {
+            request.template = template
+            return this
+        }
+
+        fun templateVariables(templateVars: Map<String, String>) : Builder {
+            request.templateVariables = templateVars
             return this
         }
 
