@@ -5,10 +5,9 @@ import com.squareup.moshi.Json
 /**
  * The response from the server after sending a message
  */
-class SendMessageResponse {
-
-    @field:Json(name = "id")
-    var id: String? = null
-    @field:Json(name = "message")
-    var message: String? = null
-}
+data class SendMessageResponse(
+        @Json(name = "id")
+        val id: String? = null,
+        @Json(name = "message")
+        val message: String? = null
+)

@@ -1,6 +1,6 @@
 # mailgun
 
-Mailgun API access in Kotlin. Uses OkHttp, Moshi, and RxJava under the hood. Android/Java 7 compatible.
+Mailgun API access in Kotlin. Uses OkHttp, Moshi, and RxJava under the hood. Android 5.0/Java 8 compatible.
 
 [![Build Status](https://travis-ci.org/Commit451/mailgun.svg?branch=master)](https://travis-ci.org/Commit451/mailgun) [![](https://jitpack.io/v/Commit451/mailgun.svg)](https://jitpack.io/#Commit451/mailgun)
 

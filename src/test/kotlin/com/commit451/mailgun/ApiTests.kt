@@ -1,13 +1,11 @@
 package com.commit451.mailgun
 
-import okhttp3.MediaType
-import okhttp3.RequestBody
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.junit.Assert
 import org.junit.Assert.assertNotNull
 import org.junit.Test
-
 
 class ApiTests {
 
@@ -35,7 +33,7 @@ class ApiTests {
 
         val attachment = Attachment(
                 fileName = "text.txt",
-                requestBody = RequestBody.create(MediaType.parse("text/plain"), "This is in a text file")
+                requestBody = "This is in a text file".toRequestBody("text/plain".toMediaTypeOrNull())
         )
         val attachments = listOf(attachment)
 

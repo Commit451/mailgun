@@ -2,7 +2,6 @@ package com.commit451.mailgun
 
 import okhttp3.MultipartBody
 
-
 /**
  * Send a message with the definition being this request. Use the [Builder] to create one
  */

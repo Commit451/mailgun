@@ -2,6 +2,7 @@ package com.commit451.mailgun
 
 import com.commit451.ehhttp.toSingle
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import io.reactivex.Single
 import okhttp3.Credentials
 import okhttp3.Interceptor
@@ -39,6 +40,7 @@ class Mailgun private constructor(builder: Mailgun.Builder) {
         okHttpClient = clientBuilder.build()
 
         moshi = Moshi.Builder()
+                .add(KotlinJsonAdapterFactory())
                 .build()
     }
 
@@ -52,7 +54,7 @@ class Mailgun private constructor(builder: Mailgun.Builder) {
         val call = okHttpClient.newCall(requestBuilder.build())
         return call.toSingle()
                 .flatMap { response ->
-                    val body = response.body()?.source()
+                    val body = response.body?.source()
                     if (body != null) {
                         val typedResponse = moshi.adapter<SendMessageResponse>(SendMessageResponse::class.java).fromJson(body)
                         Single.just(typedResponse)

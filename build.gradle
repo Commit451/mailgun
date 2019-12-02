@@ -1,6 +1,6 @@
 apply plugin: 'com.github.ben-manes.versions'
 buildscript {
-    ext.kotlin_version = '1.3.60'
+    ext.kotlin_version = '1.3.61'
 
     repositories {
         jcenter()
@@ -13,13 +13,19 @@ buildscript {
 }
 
 group 'com.commit451.mailgun'
-version '1.1.1'
+version '1.2.0'
 
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
-sourceCompatibility = JavaVersion.VERSION_1_7
-targetCompatibility = JavaVersion.VERSION_1_7
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
 
 repositories {
     jcenter()
@@ -27,22 +33,23 @@ repositories {
 }
 
 ext {
-    moshiVersion = '1.8.0'
-    okHttpVersion = '3.12.1'
+    okHttpVersion = "4.2.2"
+    moshiVersion = "1.9.2"
 }
 dependencies {
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version")
 
-    api 'io.reactivex.rxjava2:rxjava:2.2.6'
+    api("io.reactivex.rxjava2:rxjava:2.2.15")
 
-    api "com.squareup.okhttp3:okhttp:$okHttpVersion"
-    api "com.squareup.moshi:moshi:$moshiVersion"
+    api("com.squareup.okhttp3:okhttp:$okHttpVersion")
+    api("com.squareup.moshi:moshi:$moshiVersion")
+    api("com.squareup.moshi:moshi-kotlin:$moshiVersion")
 
-    api 'com.github.Commit451:ehhttp:1.2.1'
+    api("com.github.Commit451:ehhttp:1.2.1")
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation("junit:junit:4.12")
 
-    testImplementation "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
+    testImplementation("com.squareup.okhttp3:mockwebserver:$okHttpVersion")
 
-    testImplementation 'com.google.guava:guava:27.0.1-jre'
+    testImplementation("com.google.guava:guava:28.1-jre")
 }
