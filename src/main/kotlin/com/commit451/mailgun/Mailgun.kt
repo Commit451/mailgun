@@ -12,7 +12,7 @@ import okhttp3.Request
 /**
  * The Mailgun instance. Use the [Builder] to create one
  */
-class Mailgun private constructor(builder: Mailgun.Builder) {
+class Mailgun private constructor(builder: Builder) {
 
     companion object {
         private const val BASE_URL = "https://api.mailgun.net/v3/"
@@ -67,6 +67,7 @@ class Mailgun private constructor(builder: Mailgun.Builder) {
     /**
      * Build [Mailgun] instances
      */
+    @Suppress("unused")
     class Builder(internal val domain: String, internal val apiKey: String) {
 
         internal var okHttpBuilder: OkHttpClient.Builder? = null

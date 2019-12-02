@@ -55,6 +55,7 @@ class SendMessageRequest internal constructor() {
         return bodyBuilder.build()
     }
 
+    @Suppress("unused")
     class Builder(from: Contact) {
 
         private val request = SendMessageRequest()
