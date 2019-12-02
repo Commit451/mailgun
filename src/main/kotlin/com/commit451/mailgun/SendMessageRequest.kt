@@ -3,7 +3,6 @@ package com.commit451.mailgun
 import okhttp3.MultipartBody
 
 
-
 /**
  * Send a message with the definition being this request. Use the [Builder] to create one
  */
@@ -20,6 +19,7 @@ class SendMessageRequest internal constructor() {
     internal var inlineAttachments: List<Attachment>? = null
     internal var template: String? = null
     internal var templateVariables: Map<String, String>? = null
+    internal var customFormDataParts: Map<String, String> = mapOf()
 
     internal fun toMultipartBody(): MultipartBody {
         val bodyBuilder = MultipartBody.Builder()
@@ -49,6 +49,9 @@ class SendMessageRequest internal constructor() {
             templateVariables?.forEach { (k, v) ->
                 bodyBuilder.addFormDataPart("v:$k", v)
             }
+        }
+        customFormDataParts.forEach { (name, value) ->
+            bodyBuilder.addFormDataPart(name, value)
         }
         return bodyBuilder.build()
     }
@@ -91,12 +94,17 @@ class SendMessageRequest internal constructor() {
             return this
         }
 
-        fun template(template: String?) : Builder {
+        fun template(template: String?): Builder {
             request.template = template
             return this
         }
 
-        fun templateVariables(templateVars: Map<String, String>) : Builder {
+        fun customFormDataParts(variables: Map<String, String>): Builder {
+            request.customFormDataParts = variables
+            return this
+        }
+
+        fun templateVariables(templateVars: Map<String, String>): Builder {
             request.templateVariables = templateVars
             return this
         }
