@@ -120,9 +120,6 @@ class SendMessageRequest internal constructor() {
         }
 
         fun build(): SendMessageRequest {
-            if (request.text == null && request.html == null) {
-                throw Exception("Need to specify text or html parameter")
-            }
             return request
         }
     }
