@@ -28,7 +28,7 @@ class Mailgun private constructor(builder: Builder) {
         domain = builder.domain
         apiKey = builder.apiKey
         baseUrl = builder.baseUrl ?: BASE_URL
-        val clientBuilder = builder.okHttpBuilder ?: OkHttpClient.Builder()
+        val clientBuilder = builder.okHttpBuilder
 
         clientBuilder.interceptors().add(0, Interceptor { chain ->
             val credentials = Credentials.basic("api", apiKey)
