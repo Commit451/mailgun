@@ -70,13 +70,13 @@ class Mailgun private constructor(builder: Builder) {
     @Suppress("unused")
     class Builder(internal val domain: String, internal val apiKey: String) {
 
-        internal var okHttpBuilder: OkHttpClient.Builder? = null
+        internal var okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
         internal var baseUrl: String? = null
 
         /**
          * Set the custom [OkHttpClient.Builder] which will be used for network calls
          */
-        fun okHttpClientBuilder(okHttpClientBuilder: OkHttpClient.Builder?): Builder {
+        fun okHttpClientBuilder(okHttpClientBuilder: OkHttpClient.Builder): Builder {
             this.okHttpBuilder = okHttpClientBuilder
             return this
         }
