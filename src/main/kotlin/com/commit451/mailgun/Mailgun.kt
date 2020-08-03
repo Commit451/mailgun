@@ -28,7 +28,7 @@ class Mailgun private constructor(builder: Builder) {
         domain = builder.domain
         apiKey = builder.apiKey
         baseUrl = builder.baseUrl ?: BASE_URL
-        val clientBuilder = builder.okHttpBuilder ?: OkHttpClient.Builder()
+        val clientBuilder = builder.okHttpBuilder
 
         clientBuilder.interceptors().add(0, Interceptor { chain ->
             val credentials = Credentials.basic("api", apiKey)
@@ -70,13 +70,13 @@ class Mailgun private constructor(builder: Builder) {
     @Suppress("unused")
     class Builder(internal val domain: String, internal val apiKey: String) {
 
-        internal var okHttpBuilder: OkHttpClient.Builder? = null
+        internal var okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
         internal var baseUrl: String? = null
 
         /**
          * Set the custom [OkHttpClient.Builder] which will be used for network calls
          */
-        fun okHttpClientBuilder(okHttpClientBuilder: OkHttpClient.Builder?): Builder {
+        fun okHttpClientBuilder(okHttpClientBuilder: OkHttpClient.Builder): Builder {
             this.okHttpBuilder = okHttpClientBuilder
             return this
         }
